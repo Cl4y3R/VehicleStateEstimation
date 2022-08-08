@@ -7,7 +7,7 @@
 
 class UKF{
     public:
-        UKF(int dim_state, int dim_mea, Eigen::MatrixXd Q_in, Eigen::MatrixXd R_in):is_inited(false),just_begin_filt(false),n_state(dim_state),n_mea(dim_mea),Q(Q_in),R(R_in){
+        UKF(int dim_state, int dim_mea, Eigen::MatrixXd Q_in, Eigen::MatrixXd R_in,double sampletime):is_inited(false),just_begin_filt(false),n_state(dim_state),n_mea(dim_mea),Q(Q_in),R(R_in),dt(sampletime){
             std::cout<<"*********Unscented Kalman Filter created!*********"<<std::endl;
         };
         ~UKF(){
@@ -23,7 +23,7 @@ class UKF{
         double alpha = 1e-3;
         double kappa = 0;
         double b = 2;
-        double dt = 0.001;
+        double dt;
         double lambda;
         int n_state;
         int n_mea;
