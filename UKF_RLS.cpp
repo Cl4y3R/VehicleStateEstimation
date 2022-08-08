@@ -57,7 +57,7 @@ int main()
     Q_state(2,2) = 1e5;
     R_mea(0,0) = 1e-3;
     R_mea(1,1) = 1e-3;
-    UKF BetaEstimator(3,2,Q_state,R_mea,0.001);
+    UKF BetaEstimator(3,2,Q_state,R_mea,0.01);
 
     std::vector<double> beta_est_deg;
     //ukf main loop
