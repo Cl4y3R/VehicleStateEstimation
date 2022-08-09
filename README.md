@@ -1,5 +1,5 @@
 # VehicleStateEstimation
-Online vehicle state estimation algorithm for vehicle motion control using Unscented Kalman Filter(UKF).
+Online vehicle state estimation algorithm for vehicle motion control using Unscented Kalman Filter(UKF). NOT FOR COMMERCIAL USE!
 
 ## UKF core
 The UKF core is created as pure header file(hpp), thus using it would be simple and easy: include it in your source code and create ukf estimator by calling `UKF yourEstimator`.
@@ -44,7 +44,63 @@ The measurements are:
 -Lateral acceleration $a_y$  
 The state space:  
 $\dot{\beta}=-\dot{\psi}+\frac{1}{mv}[F_{xf}sin(\delta_f-\beta)+F_{yf}cos(\delta_f-\beta)+F_{xr}sin(-\beta)+F_{yr}cos(-\beta)]$
-
 $\dot{F_{xf}}=0$  
-$\dot{F_{xr}}=0$
-## DUKF with parallel estimation of cornering stiffness
+$\dot{F_{xr}}=0$  
+The measurement equation:  
+$y_1=a_x=\frac{1}{m}[-F_{yf}sin(\delta_f)+F_{xf}cos(\delta_f)+F_{xr}]$
+$y_2=a_y=\frac{1}{m}[F_{yf}cos(\delta_f)+F_{yr}+F_{xf}sin(\delta_f))]$  
+
+## DUKF with parallel estimation of cornering stiffness  
+When offline identification of the cornering stiffness is not avaliable, you can use the parallel structure of the UKF(DUKF) to estimate the vehicle slip angle as well as the cornering stiffness by setting a approximated initial value of the cornering stiffness. The UKF will change the cornering stiffness value simutanoeusly.  
+
+**Observer A**
+
+The estimated parameters are:  
+-Vehicle speed $v$  
+-Yawrate $\dot{\psi}$  
+-Front axle lateral force $F_{yf}$  
+-Rear axle lateral force $F_{yr}$  
+-Front axle longitudinal force $F_{xf}$  
+The inputs are:  
+-Front wheel steering angle $\delta_f$  
+-Vehicle slip angle $\beta$ 
+The measurements are:  
+-Vehicle speed $v$ 
+-Yawrate $\dot{\psi}$  
+-Longitudinal acceleration $a_x$  
+-Lateral acceleration $a_y$  
+The state space:  
+$\dot{v}=\frac{1}{m}[F_{xf}cos(\beta-\delta_f)+F_{yf}sin(\beta-\delta_f)+F_{yr}sin(\beta)]$  
+$\ddot{\psi}=\frac{1}{Jz}[(F_{yf}cos(\delta_f)+F_{xf}sin(\delta_f))lf + F_{yr}l_r]$  
+$\dot{F_{xf}}=\dot{F}_{yf}=\dot{F}_{yr}=0$  
+The measurements are:  
+$y_1=v=v$  
+$y_2=\dot{\psi}=\dot{\psi}$  
+$y_3=a_x=\frac{1}{m}[-F_{yf}sin(\delta_f)+F_{xf}cos(\delta_f)]$  
+$y_4=a_y=\frac{1}{m}[F_{yf}cos(\delta_f+F_{yr}+F_{xf}sin(\delta_f))]$  
+
+**Observer B**
+
+The estimated parameters are:  
+-Vehicle slip angle $\beta$ 
+-Front axle cornering stiffness changing part $\Delta c_f$  
+-Rear axle cornering stiffness changing part $\Delta c_r$  
+The inputs are: 
+-Front wheel steering angle $\delta_f$  
+-Yawrate $\dot{\psi}$  
+-Front axle longitudinal force $F_{xf}$  
+The measurements are:
+-Front axle lateral force $F_{yf}$  
+-Rear axle lateral force $F_{yr}$  
+-Lateral acceleration $a_y$  
+The state space:  
+$\dot{\beta}=-\dot{\psi}+\frac{1}{mv}[F_{xf}sin(\delta_f-\beta)+F_{yf}cos(\delta_f-\beta)+F_{yr}cos(\beta)]$
+$F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$
+$F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$
+$\Delta \dot{c}_f = 0$
+$\Delta \dot{c}_r = 0$
+The measurement equations:  
+$y_1=F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$
+$y_2=F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$
+$y_3=\frac{1}{m}[(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})cos(\delta_f)+(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})+F_{xf}sin(\delta_f)]$
+
