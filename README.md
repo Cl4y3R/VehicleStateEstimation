@@ -72,7 +72,7 @@ The measurements are:
 The state space:  
 $\dot{v}=\frac{1}{m}[F_{xf}cos(\beta-\delta_f)+F_{yf}sin(\beta-\delta_f)+F_{yr}sin(\beta)]$  
 $\ddot{\psi}=\frac{1}{Jz}[(F_{yf}cos(\delta_f)+F_{xf}sin(\delta_f))lf + F_{yr}l_r]$  
-$\dot{F_x}=\dot{F}_{yf}=\dot{F}_{yr}=0$  
+$\dot{F_x}=\dot{F}\_{yf}=\dot{F}\_{yr}=0$  
 The measurements are:  
 $y_1=v=v$  
 $y_2=\dot{\psi}=\dot{\psi}$  
@@ -97,8 +97,8 @@ The state space:
 $\dot{\beta}=-\dot{\psi}+\frac{1}{mv}[F_{xf}sin(\delta_f-\beta)+F_{yf}cos(\delta_f-\beta)+F_{yr}cos(\beta)]$
 $F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$
 $F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$
-$\Delta \dot{c}_f = 0$
-$\Delta \dot{c}_r = 0$
+$\Delta \dot{c}\_f = 0$
+$\Delta \dot{c}\_r = 0$
 The measurement equations:  
 $y_1=F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$
 $y_2=F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$
