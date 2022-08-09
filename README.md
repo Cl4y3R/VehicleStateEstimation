@@ -94,13 +94,13 @@ The measurements are:
 -Rear axle lateral force $F_{yr}$  
 -Lateral acceleration $a_y$  
 The state space:  
-$\dot{\beta}=-\dot{\psi}+\frac{1}{mv}[F_{xf}sin(\delta_f-\beta)+F_{yf}cos(\delta_f-\beta)+F_{yr}cos(\beta)]$
-$F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$
-$F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$
-$\Delta \dot{c}\_f = 0$
-$\Delta \dot{c}\_r = 0$
+$\dot{\beta}=-\dot{\psi}+\frac{1}{mv}[F_{xf}sin(\delta_f-\beta)+F_{yf}cos(\delta_f-\beta)+F_{yr}cos(\beta)]$  
+$F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$  
+$F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$  
+$\Delta \dot{c}\_f = 0$  
+$\Delta \dot{c}\_r = 0$  
 The measurement equations:  
-$y_1=F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$
-$y_2=F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$
-$y_3=\frac{1}{m}[(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})cos(\delta_f)+(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})+F_{xf}sin(\delta_f)]$
+$y_1=F_{yf}=(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})$  
+$y_2=F_{yr}=(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})$  
+$y_3=\frac{1}{m}[(c_f+\Delta c_f)(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})cos(\delta_f)+(c_r+\Delta c_r)(-\beta+\frac{l_r\dot{\psi}}{v})+F_{xf}sin(\delta_f)]$  
 
