@@ -28,6 +28,23 @@ $A=\begin{bmatrix}\frac{\delta_f-\beta-\frac{l_f\dot{\psi}}{v}}{m}&\frac{-\beta+
 > $P_{k+1} = \frac{1}{\lambda}(P_k - K_{k}A_kP_k)$
 > 
 > $\theta_{k+1} =\theta_k+K_{k}E_k$
-> 
+>   
 
+$\lambda \in[0.98,1]$  
+
+Then use the UKF for vehicle slip angle online estimation.
+The estimated parameters are:  
+-Vehicle slip angle $\beta$  
+-Vehicle longitudinal forces $F_{xf}, F_{xr}$  
+The inputs are:  
+-Front wheel steering angle $\delta_f$  
+-Yawrate $\dot{\psi}$  
+The measurements are:  
+-Longitudinal acceleration $a_x$  
+-Lateral acceleration $a_y$  
+The state space:  
+$\dot{\beta}=-\dot{\psi}+\frac{1}{mv}[F_{xf}sin(\delta_f-\beta)+F_{yf}cos(\delta_f-\beta)+F_{xr}sin(-\beta)+F_{yr}cos(-\beta)]$
+
+$\dot{F_{xf}}=0$  
+$\dot{F_{xr}}=0$
 ## DUKF with parallel estimation of cornering stiffness
