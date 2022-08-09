@@ -1,6 +1,6 @@
 # VehicleStateEstimation
 Online vehicle state estimation algorithm for vehicle motion control using Unscented Kalman Filter(UKF).  
-**NOT FOR COMMERCIAL USE!**
+**NON-COMMERCIAL USE!**
 
 ## UKF core
 The UKF core is created as pure header file(hpp), thus using it would be simple and easy: include it in your source code and create ukf estimator by calling `UKF yourEstimator`.
