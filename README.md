@@ -72,7 +72,7 @@ The measurements are:
 The state space:  
 $\dot{v}=\frac{1}{m}[F_{xf}cos(\beta-\delta_f)+F_{yf}sin(\beta-\delta_f)+F_{yr}sin(\beta)]$  
 $\ddot{\psi}=\frac{1}{Jz}[(F_{yf}cos(\delta_f)+F_{xf}sin(\delta_f))lf + F_{yr}l_r]$  
-$\dot{F_{xf}}=\dot{F}_{yf}=\dot{F}_{yr}=0$  
+$\dot{F_x}=\dot{F}_{yf}=\dot{F}_{yr}=0$  
 The measurements are:  
 $y_1=v=v$  
 $y_2=\dot{\psi}=\dot{\psi}$  
