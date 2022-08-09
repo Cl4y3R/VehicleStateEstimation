@@ -7,18 +7,27 @@ The UKF core is created as pure header file(hpp), thus using it would be simple 
 The UKF core contains 4 functions: `void init(), void predict(Eigen::MatrixXd X_d), void measurement(Eigen::MatrixXd Z_in), void update()`. To use UKF you must call these 4 functions exactly in the given order.
 
 ## UKF with offline identification of cornering stiffness
-First, identify the cornering stiffness(linear region) by using Least Square method. The measuring parameters are:  
--Derivative of yawrate `$ a $`  
--Lateral acceleration `$ a_y $`  
-`$$A=1$$`  
-横摆角加速度$\ddot{\psi}$（微分可得），横向加速度$a_y$  
+First, identify the cornering stiffness(linear region) by using Least Square method.  
+The measuring parameters are:  
+-Derivative of yawrate $\ddot{\psi}$  
+-Lateral acceleration $a_y$  
+The used parameter are:  
+-Vehicle slip angle $\beta$  
+-Vehicle speed $v$  
+-Yawrate $\dot{\psi}$  
+The identified parameter are:  
+-Conrering stiffness $C_f,C_r$  
 
-参数：侧偏角$\beta$，车速$v$，横摆角速度$\dot{\psi}$
+$A=\begin{bmatrix}\frac{\delta_f-\beta-\frac{l_f\dot{\psi}}{v}}{m}&\frac{-\beta+\frac{l_r\dot{\psi}}{v}}{m}\\\frac{l_f(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})}{J_z}&\frac{l_f(-\beta+\frac{l_r\dot{\psi}}{v})}{J_z}\end{bmatrix}$
 
-测量量$y$：横摆角加速度$\ddot{\psi}$（微分可得），横向加速度$a_y$
-
-标定量$\theta$：前后轴侧偏刚度$C_f,C_r$
-
-则有$y=A\theta$
+> $E_k = Y_k - A_k\theta_k$
+> 
+> 
+> $K_{k} = P_kA^T(\lambda I+A_kP_kA^T)^{-1}$
+> 
+> $P_{k+1} = \frac{1}{\lambda}(P_k - K_{k}A_kP_k)$
+> 
+> $\theta_{k+1} =\theta_k+K_{k}E_k$
+> 
 
 ## DUKF with parallel estimation of cornering stiffness
