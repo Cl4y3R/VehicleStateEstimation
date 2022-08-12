@@ -90,9 +90,9 @@ int main()
         double fx = ForceEstimator.X_out(4,0);
         X_pA(0,0) = (fx*cos(beta_last - incsv[i].deltaf) + fyf*sin(beta_last - incsv[i].deltaf) + fyr*sin(beta_last))/m;
         X_pA(1,0) = (lf* (fyf*cos(incsv[i].deltaf) + fx*sin(incsv[i].deltaf)) - lr*fyr)/m;
-        X_pB(2,0) = 0;
-        X_pB(3,0) = 0;
-        X_pB(4,0) = 0;
+        X_pA(2,0) = 0;
+        X_pA(3,0) = 0;
+        X_pA(4,0) = 0;
         ForceEstimator.Z_hat(0,0) = incsv[i].vx;
         ForceEstimator.Z_hat(1,0) = incsv[i].r;
         ForceEstimator.Z_hat(2,0) = incsv[i].ax;
