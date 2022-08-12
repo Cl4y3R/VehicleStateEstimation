@@ -49,7 +49,7 @@ int main()
     //calling ukf
 
     Eigen::MatrixXd X_pA = Eigen::MatrixXd::Zero(5,1);
-    Eigen::MatrixXd X_pB = Eigen::MatrixXd::Zero(5,1);
+    Eigen::MatrixXd X_pB = Eigen::MatrixXd::Zero(3,1);
     Eigen::MatrixXd Z_meaA = Eigen::MatrixXd::Zero(4, 2 * 5 + 1);
     Eigen::MatrixXd Z_meaB = Eigen::MatrixXd::Zero(3, 2 * 3 + 1);
     Eigen::MatrixXd Q_stateA = Eigen::MatrixXd::Identity(5,5);
@@ -90,9 +90,6 @@ int main()
         double fx = ForceEstimator.X_out(4,0);
         X_pA(0,0) = (fx*cos(beta_last - incsv[i].deltaf) + fyf*sin(beta_last - incsv[i].deltaf) + fyr*sin(beta_last))/m;
         X_pA(1,0) = (lf* (fyf*cos(incsv[i].deltaf) + fx*sin(incsv[i].deltaf)) - lr*fyr)/m;
-        X_pA(2,0) = 0;
-        X_pA(3,0) = 0;
-        X_pA(4,0) = 0;
         ForceEstimator.Z_hat(0,0) = incsv[i].vx;
         ForceEstimator.Z_hat(1,0) = incsv[i].r;
         ForceEstimator.Z_hat(2,0) = incsv[i].ax;
@@ -122,8 +119,6 @@ int main()
         double alphar = - beta + lr*incsv[i].r/incsv[i].vx;
         double fx_est = ForceEstimator.X_out(4,0);
         X_pB(0,0) = -incsv[i].r + (fx_est*sin(incsv[i].deltaf - beta) + (cf+cfd)*alphaf*cos(incsv[i].deltaf - beta) + (cr+crd)*alphar*cos(-beta))/(m*incsv[i].vx);
-        X_pB(1,0) = 0;
-        X_pB(2,0) = 0;
         BetaEstimator.Z_hat(0,0) = ForceEstimator.X_out(2,0);
         BetaEstimator.Z_hat(1,0) = ForceEstimator.X_out(3,0);
         BetaEstimator.Z_hat(2,0) = incsv[i].ay;
