@@ -2,8 +2,9 @@
 #ifndef UKF_HPP
 #define UKF_HPP
 
-#include <iostream>
-#include <Eigen/Dense>
+#include<iostream>
+#include<Eigen/Dense>
+#include<cmath>
 
 class UKF{
     public:
@@ -147,6 +148,9 @@ void UKF::measurement(Eigen::MatrixXd Z_in){
 void UKF::update(){
     if (just_begin_filt)
         return;
+    if(std::isnan(K(0,0))){
+        K.fill(0.0);//reset if K has NaN
+    }
     X_out = X_pre_mean + K * (Z_hat - Z_pre_mean);
     P_pre += - K * P_mea * K.transpose();
 }
