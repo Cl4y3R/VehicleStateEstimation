@@ -16,8 +16,9 @@ class UKF{
         };
 
         void init();
-        void predict(Eigen::MatrixXd X_d);
-        void measurement(Eigen::MatrixXd Z_in);
+        void sigma();
+        void predict();
+        void measurement();
         void update();
 
 
@@ -38,6 +39,7 @@ class UKF{
         Eigen::VectorXd Wc = Eigen::VectorXd::Zero(2 * n_state + 1);
         Eigen::MatrixXd X_sig = Eigen::MatrixXd::Zero(n_state, 2 * n_state + 1);
         Eigen::MatrixXd X_sig_pre = Eigen::MatrixXd::Zero(n_state, 2 * n_state + 1);
+        Eigen::MatrixXd Xd_sig = Eigen::MatrixXd::Zero(n_state, 2 * n_state + 1);
         Eigen::VectorXd X_pre_mean = Eigen::VectorXd::Zero(n_state);
         Eigen::MatrixXd Z_sig_pre = Eigen::MatrixXd::Zero(n_mea, 2 * n_state + 1);
         Eigen::VectorXd Z_pre_mean = Eigen::VectorXd::Zero(n_mea);
@@ -59,28 +61,21 @@ void UKF::init(){
         lambda = alpha * alpha * (n_state + kappa) - n_state;
         //sigma points weights
         //common choice
-        Wm(0) = lambda / (n_state + lambda);
-        Wc(0) = Wm(0) + (1 - alpha * alpha + b);
-        for(int i = 1; i < 2 * n_state + 1;i++){
-		    Wm(i) = 1 / (2 * (n_state + lambda));
-		    Wc(i) = 1 / (2 * (n_state + lambda));
-        }
+//      Wm(0) = lambda / (n_state + lambda);
+//      Wc(0) = Wm(0) + (1 - alpha * alpha + b);
+//      for(int i = 1; i < 2 * n_state + 1;i++){
+//		    Wm(i) = 1 / (2 * (n_state + lambda));
+//		    Wc(i) = 1 / (2 * (n_state + lambda));
+//      }
 
         //matlab choice
-        /*Wm(0) = 1 - n_state / (alpha * alpha *(n_state + kappa));
+        Wm(0) = 1 - n_state / (alpha * alpha *(n_state + kappa));
         Wc(0) = (2 - alpha * alpha + b) - n_state / (alpha * alpha *(n_state + kappa));
         for(int i = 1; i < 2 * n_state + 1;i++){
 	    	Wm(i) = 1 / (2 * alpha * alpha * (n_state + kappa));
 	    	Wc(i) = 1 / (2 * alpha * alpha * (n_state + kappa));
-        }*/
+        }
 
-        //original choice
-        /*Wm(0) = 0 / (n_state + 0);
-        Wc(0) = Wm(0);
-        for(int i = 1; i < 2 * n_state + 1;i++){
-		    Wm(i) = 1 / (2 * (n_state + 0));
-		    Wc(i) = 1 / (2 * (n_state + 0));
-        }*/
         is_inited = true;
         just_begin_filt = true;
 
@@ -89,7 +84,7 @@ void UKF::init(){
 
 }
 
-void UKF::predict(Eigen::MatrixXd X_d){
+void UKF::sigma(){
     if (just_begin_filt)
         return;
     //create sigma points
@@ -100,12 +95,16 @@ void UKF::predict(Eigen::MatrixXd X_d){
         X_sig.col(i + 1) = X_out + sqrt(lambda + n_state) * A.col(i);
         X_sig.col(i + 1 + n_state) = X_out - sqrt(lambda + n_state) * A.col(i);
     }
+}
 
+void UKF::predict(){
+    if (just_begin_filt)
+        return;
     //nonlinear transformation of the sigma points
-    for(int i=0;i < 2 * n_state + 1;i++){		
+    for(int i=0;i < 2 * n_state + 1;i++){
         for(int j=0;j<n_state;j++){
-            X_sig_pre(j,i) = X_sig(j,i) + X_d(j,0) * dt;
-        }	
+            X_sig_pre(j,i) = X_sig(j,i) + Xd_sig(j,i) * dt;
+        }
     }
 
     //prediction mean and covariance
@@ -113,24 +112,26 @@ void UKF::predict(Eigen::MatrixXd X_d){
     X_pre_mean.fill(0.0);
     for(int i = 0;i < 2 * n_state + 1;i++){
 		X_pre_mean += Wm(i) * X_sig_pre.col(i);
-		P_pre += Wc(i) * (X_sig_pre.col(i) - X_pre_mean) * (X_sig_pre.col(i) - X_pre_mean).transpose();
+    }
+    for(int i = 0;i < 2 * n_state + 1;i++){
+        P_pre += Wc(i) * (X_sig_pre.col(i) - X_pre_mean) * (X_sig_pre.col(i) - X_pre_mean).transpose();
     }
     P_pre += Q;
 }
 
-void UKF::measurement(Eigen::MatrixXd Z_in){
+void UKF::measurement(){
     if (just_begin_filt)
         return;
     /*!!!!!!!!!!!WARNING!!!!!!!!!!!!!!
         Measurement of sigma points must be calculated before calling UKF::measurement
     */
-    //read measurement of sigma points
-    Z_sig_pre = Z_in;
     //measurement mean and covariance
     P_mea.fill(0.0);
     Z_pre_mean.fill(0.0);
     for(int i = 0;i < 2 * n_state + 1;i++){
         Z_pre_mean += Wm(i) * Z_sig_pre.col(i);
+    }
+    for(int i = 0;i < 2 * n_state + 1;i++){
         P_mea += Wc(i) * (Z_sig_pre.col(i) - Z_pre_mean)* (Z_sig_pre.col(i) - Z_pre_mean).transpose();
     }
     P_mea += R;
