@@ -146,10 +146,10 @@ int main()
             double fx_est = ForceEstimator.X_sig(4,k);
             BetaEstimator.Xd_sig(0,k) = -incsv[i].r + (fx_est*sin(incsv[i].deltaf - beta) + (cf+cfd)*alphaf*cos(incsv[i].deltaf - beta) + (cr+crd)*alphar*cos(-beta))/(m*incsv[i].vx);
         }
-        BetaEstimator.Z_hat(0,0) = ForceEstimator.X_out(2,0);
         //predict
         BetaEstimator.predict();
         //measurement
+        BetaEstimator.Z_hat(0,0) = ForceEstimator.X_out(2,0);
         BetaEstimator.Z_hat(1,0) = ForceEstimator.X_out(3,0);
         BetaEstimator.Z_hat(2,0) = incsv[i].ay;
         for(int k=0;k<BetaEstimator.Xd_sig.cols();k++){
