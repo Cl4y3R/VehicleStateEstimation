@@ -88,7 +88,7 @@ void UKF::sigma(){
     if (just_begin_filt)
         return;
     //create sigma points
-    Eigen::MatrixXd A = P_pre.ldlt().matrixL();//robust cholesky decomposition for A = P^TLDL*P
+    Eigen::MatrixXd A = P_pre.llt().matrixL();//cholesky decomposition
     X_sig.fill(0.0);
     X_sig.col(0) = X_out;
     for (int i = 0; i < n_state; ++i) {
