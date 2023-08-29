@@ -75,13 +75,13 @@ The measurements are:
 -Lateral acceleration $a_y$  
 The state space:  
 $\dot{v}=\frac{1}{m}[F_{xf}cos(\beta-\delta_f)+F_{yf}sin(\beta-\delta_f)+F_{yr}sin(\beta)]$  
-$\ddot{\psi}=\frac{1}{Jz}[(F_{yf}cos(\delta_f)+F_{xf}sin(\delta_f))lf + F_{yr}l_r]$  
+$\ddot{\psi}=\frac{1}{Jz}[(F_{yf}cos(\delta_f)+F_{xf}sin(\delta_f))lf - F_{yr}l_r]$  
 $\dot{F_x}=\dot{F}\_{yf}=\dot{F}\_{yr}=0$  
 The measurements are:  
 $y_1=v=v$  
 $y_2=\dot{\psi}=\dot{\psi}$  
 $y_3=a_x=\frac{1}{m}[-F_{yf}sin(\delta_f)+F_{xf}cos(\delta_f)]$  
-$y_4=a_y=\frac{1}{m}[F_{yf}cos(\delta_f+F_{yr}+F_{xf}sin(\delta_f))]$  
+$y_4=a_y=\frac{1}{m}[F_{yf}cos(\delta_f)+F_{yr}+F_{xf}sin(\delta_f))]$  
 
 **Observer B**
 
