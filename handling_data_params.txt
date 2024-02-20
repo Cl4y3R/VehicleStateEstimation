@@ -1,3 +1,4 @@
+rollrate,pitchrate,yawrate,ax,ay,az,beta,yawrate_noise,ax_noise,ay_noise,vx,vy,vz,betarate,pitch,roll,yaw
 mass:1370+90(front)+65(rear)+4*22(wheel)
 izz:2315.3
 lf:1.11
