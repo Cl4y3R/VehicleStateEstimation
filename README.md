@@ -21,7 +21,7 @@ The identified parameter are:
 
 $$
   A=\begin{bmatrix}\frac{\delta_f-\beta-\frac{l_f\dot{\psi}}{v}}{m} & \frac{-\beta+\frac{l_r\dot{\psi}}{v}}{m}\\
-  \frac{l_f(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})}{J_z} & \frac{l_f(-\beta+\frac{l_r\dot{\psi}}{v})}{J_z}\end{bmatrix}
+  \frac{l_f(\delta_f-\beta-\frac{l_f\dot{\psi}}{v})}{J_z} & \frac{-l_r(-\beta+\frac{l_r\dot{\psi}}{v})}{J_z}\end{bmatrix}
 $$
 
 > $E_k = Y_k - A_k\theta_k$
