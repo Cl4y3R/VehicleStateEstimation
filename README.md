@@ -36,7 +36,7 @@ $$
 
 $\lambda \in[0.98,1]$  
 
-Then use the UKF for vehicle slip angle online estimation.
+Then use the UKF for vehicle slip angle online estimation.  
 The estimated parameters are:  
 -Vehicle slip angle $\beta$  
 -Vehicle longitudinal forces $F_{xf}, F_{xr}$  
